@@ -1,10 +1,51 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
+import React from 'react';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  interface Stmt {
+    value: string;
+    autocompletes: string[];
+  }
+
+  const [stmt, setStmt] = React.useState<Stmt>({
+    value: "",
+    autocompletes: [],
+  });
+
+  const handleChange = (e: any) => {
+    // Trim value & convert to lowercase
+    const value = e.target.value.trim().toUpperCase();
+
+    const words:string[] = value.split(" ")
+    
+    // autocomplete stuff
+    const autocompletes : string[] = [];
+  
+    const sql_stmts:string[] = ['WHERE', 'SELECT'];
+    if (words.length >0) {
+
+      const last_word: string = words[words.length - 1];
+      
+      for (const sql_stmt of sql_stmts) {
+        //TODO only check for beginning of substring
+        if (sql_stmt.includes(last_word)) {
+          autocompletes.push(sql_stmt);
+        }
+      }
+    }
+
+    //set state of email to value or error. 
+    setStmt({value, autocompletes});
+
+    
+
+  };
+  
   return (
     <>
       <Head>
@@ -14,9 +55,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 className="text-3xl font-bold underline">
-          Hello world!
-        </h1>
+        <textarea 
+          id="textarea1" 
+          className="resize p-2 m-2" 
+          name="name" 
+          placeholder="Your text here "
+          onChange={handleChange}
+        >
+        </textarea>
+        <p>Autocomplete: {stmt.autocompletes[0]}</p>
       </main>
     </>
   )
