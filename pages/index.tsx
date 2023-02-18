@@ -24,7 +24,7 @@ export default function Home() {
     const words:string[] = value.split(" ")
     
     // autocomplete stuff
-    const autocompletes : string[] = [];
+    var autocompletes : string[] = [];
   
     const sql_stmts:string[] = ['WHERE', 'SELECT'];
     if (words.length >0) {
@@ -33,16 +33,18 @@ export default function Home() {
       
       for (const sql_stmt of sql_stmts) {
         //TODO only check for beginning of substring
-        if (sql_stmt.includes(last_word)) {
+        if (sql_stmt.startsWith(last_word)) {
           autocompletes.push(sql_stmt);
         }
       }
     }
 
+    if (value == '') {
+      autocompletes = [];
+    }
+      
     //set state of email to value or error. 
     setStmt({value, autocompletes});
-
-    
 
   };
   
