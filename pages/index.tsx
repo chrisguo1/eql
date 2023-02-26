@@ -57,15 +57,20 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <textarea 
-          id="textarea1" 
-          className="resize p-2 m-2" 
-          name="name" 
-          placeholder="Your text here "
-          onChange={handleChange}
+        <div 
+          role="textbox"
+          contentEditable
         >
-        </textarea>
-        <p>Autocomplete: {stmt.autocompletes[0]}</p>
+          <textarea 
+            id="textarea1" 
+            className="resize p-2 m-2" 
+            name="name" 
+            placeholder="Your text here "
+            onChange={handleChange}
+          >
+          </textarea>
+        </div>
+        <div className = 'z-40'>Autocomplete: {stmt.autocompletes[0]}</div>
       </main>
     </>
   )
